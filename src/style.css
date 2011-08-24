@@ -1,0 +1,21 @@
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace s "library://ns.adobe.com/flex/spark";
+
+/*
+s|Group#outside {
+	backgroundColor: #FF0000;
+	width: 100%;
+}*/
+#settingWindow {
+	left: 5;
+	top: 5;
+	right: 5;
+	bottom: 5;
+}
+
+.fullSize {
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}

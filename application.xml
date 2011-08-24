@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/2.7">
+  <id>RapidTweet</id>
+  <versionNumber>1.0</versionNumber>
+  <filename>RapidTweet</filename>
+  <name>RapidTweet</name>
+  <initialWindow>
+    <title>RapidTweet</title>
+    <content>RapidTweet.swf</content>
+    <systemChrome>none</systemChrome>
+    <transparent>true</transparent>
+    <visible>false</visible>
+    <resizable>true</resizable>
+  </initialWindow>
+  <!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+</application>

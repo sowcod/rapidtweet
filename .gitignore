@@ -1,0 +1,5 @@
+*.old
+*.swp
+*.log
+.DS_Store
+.svn/
