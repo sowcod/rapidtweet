@@ -17,6 +17,7 @@
   <classpaths>
     <class path="src" />
     <class path="oauth-as3\src" />
+    <class path="as3corelib\src" />
   </classpaths>
   <!-- Build options -->
   <build>

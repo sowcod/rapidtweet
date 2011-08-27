@@ -13,17 +13,23 @@
 		<![CDATA[
 		import flash.events.Event;
 		import flash.events.MouseEvent;
-		import settings.AuthorizeWindow;
+		import authorizer.OAuthAuthorizer;
+		import net.sowcod.rapidtweet.authorizer.IAuthorizer;
+		import net.sowcod.rapidtweet.authorizer.AuthorizeEvent;
 		private function openAuthorizeWindow(ev:MouseEvent):void
 		{
 			this.enabled = false;
 			var self:SettingWindow = this;
-			var window:AuthorizeWindow = new AuthorizeWindow();
-			window.open();
-			window.addEventListener(Event.CLOSE, function(ev:Event):void {
+			var auth:IAuthorizer = new OAuthAuthorizer();
+			auth.addEventListener(AuthorizeEvent.AUTHORIZATION_COMPLETED, function(ev:Event):void {
 				self.enabled = true;
                 self.currentState = "authorized";
 			});
+			auth.addEventListener(AuthorizeEvent.AUTHORIZATION_FAILED, function(ev:Event):void {
+				self.enabled = true;
+                self.currentState = "default";
+			});
+			auth.begin();
 		}
 		]]>
 	</fx:Script>

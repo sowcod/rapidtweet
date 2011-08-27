@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<comp:AuthorizeWindowController xmlns:fx="http://ns.adobe.com/mxml/2009" 
+               xmlns:s="library://ns.adobe.com/flex/spark" 
+               xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:comp="authorizer.*"
+			   showStatusBar="false"
+			   width="850" height="600">
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<s:VGroup width="100%" height="100%" gap="0">
+		<s:TextInput width="100%" editable="false" text="{html_control.location}" />
+        <!--<mx:ProgressBar id="html_progress" width="100%" mode="polled" />-->
+		<mx:HTML id="html_control" width="100%" height="100%" />
+		<s:HGroup width="100%" horizontalAlign="right" verticalAlign="middle">
+			<s:Label text="PIN:" />
+			<s:TextInput id="pin_code" />
+			<s:Button label="認証" click="this.close();" />
+		</s:HGroup>
+	</s:VGroup>
+</comp:AuthorizeWindowController>

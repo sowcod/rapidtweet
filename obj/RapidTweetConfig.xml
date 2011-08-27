@@ -16,20 +16,21 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'2011/08/22'</value>
+      <value>'2011/08/27'</value>
     </define>
     <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>K:\sohei\Documents\Projects\RapidTweet\src</path-element>
-      <path-element>K:\sohei\Documents\Projects\RapidTweet\oauth-as3\src</path-element>
+      <path-element>K:\sohei\Documents\Projects\rapidtweet\src</path-element>
+      <path-element>K:\sohei\Documents\Projects\rapidtweet\oauth-as3\src</path-element>
+      <path-element>K:\sohei\Documents\Projects\rapidtweet\as3corelib\src</path-element>
       <path-element>J:\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>K:\sohei\Documents\Projects\RapidTweet\oauth-as3\lib\Crypto.swc</path-element>
+      <path-element>K:\sohei\Documents\Projects\rapidtweet\oauth-as3\lib\Crypto.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>K:\sohei\Documents\Projects\RapidTweet\src\Main.mxml</path-element>
+    <path-element>K:\sohei\Documents\Projects\rapidtweet\src\Main.mxml</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
