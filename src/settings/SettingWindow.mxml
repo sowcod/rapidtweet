@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Window xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<settingsComp:SettingWindowController xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark" 
                xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   xmlns:settingsComp="settings.*"
 			   width="400" height="400"
 			   showStatusBar = "false"
 			   defaultButton="{button_close}">
@@ -9,53 +10,13 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<fx:Script>
-		<![CDATA[
-		import flash.events.Event;
-		import flash.events.MouseEvent;
-		import authorizer.OAuthAuthorizer;
-		import net.sowcod.rapidtweet.authorizer.IAuthorizer;
-		import net.sowcod.rapidtweet.authorizer.AuthorizeEvent;
-		private function openAuthorizeWindow(ev:MouseEvent):void
-		{
-			this.enabled = false;
-			var self:SettingWindow = this;
-			var auth:IAuthorizer = new OAuthAuthorizer();
-			auth.addEventListener(AuthorizeEvent.AUTHORIZATION_COMPLETED, function(ev:Event):void {
-				self.enabled = true;
-                self.currentState = "authorized";
-			});
-			auth.addEventListener(AuthorizeEvent.AUTHORIZATION_FAILED, function(ev:Event):void {
-				self.enabled = true;
-                self.currentState = "default";
-			});
-			auth.begin();
-		}
-		]]>
-	</fx:Script>
-    <s:states>
-        <mx:State name="default" />
-        <mx:State name="authorized" />
-    </s:states>
-	<s:VGroup id="settingWindow">
+	<s:VGroup id="settingWindow" width="100%" height="100%">
 		<mx:TabNavigator width="100%" height="100%">
-			<mx:ViewStack label="Account">
-				<s:NavigatorContent>
-					<s:Form>
-						<s:FormItem id="account_form" label="Account:">
-							<s:TextInput text="sowcod" editable="false" />
-                            <s:Button label.default="認証" 
-                                    click.default="this.openAuthorizeWindow(event);" 
-                                    label.authorized="認証クリア"
-                                    click.authorized="this.currentState='default';"
-                                />
-						</s:FormItem>
-					</s:Form>
-				</s:NavigatorContent>
-			</mx:ViewStack>
+			<settingsComp:AuthorizationSetting label="Account"/>
+			<settingsComp:RefreshSetting label="Refresh" />
 		</mx:TabNavigator>
 		<s:HGroup width="100%" horizontalAlign="right">
 			<s:Button id="button_close" label="閉じる" click="this.close()" />
 		</s:HGroup>
 	</s:VGroup>
-</s:Window>
+</settingsComp:SettingWindowController>

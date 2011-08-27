@@ -8,7 +8,9 @@ package net.sowcod.rapidtweet.authorizer
 	 */
 	public interface IApiInterface 
 	{
-		function homeTimeline(options:Object):URLLoader;
+		function get userID():String;
+		function get screenName():String;
+		function homeTimeline(options:Object = null):URLLoader;
 	}
 	
 }

@@ -24,6 +24,8 @@ package authorizer
 		public static const ACCESS_TOKEN:String = "oauth/access_token";
 		public static const AUTH:String = "oauth/authorize";
 		
+		public static const HOME_TIMELINE:String = "statuses/home_timeline";
+		
 		private var _consumer:OAuthConsumer;
 		private var _token:OAuthToken;
 		private var _userID:String;
@@ -53,7 +55,7 @@ package authorizer
 		public function beginRequestToken():URLLoader
 		{
 			var oauthRequest:OAuthRequest = new OAuthRequest("GET",
-					this.getApiUrl(OAuthTwitter.REQUEST_TOKEN),
+					this.getApiUrl(OAuthTwitter.REQUEST_TOKEN, null),
 					{ "oauth_version":"1.0" }, this._consumer);
 			
 			var requestUrl:String = oauthRequest.buildRequest(
@@ -84,14 +86,14 @@ package authorizer
 		
 		public function getAuthorizeUrl():String
 		{
-			return this.getApiUrl(OAuthTwitter.AUTH) + "?oauth_token=" + this._token.key;
+			return this.getApiUrl(OAuthTwitter.AUTH, null) + "?oauth_token=" + this._token.key;
 		}
 		
 		public function beginAccessToken(pinCode:String):URLLoader
 		{
 			var loader:URLLoader = this.beginApiRequest(
 					OAuthTwitter.ACCESS_TOKEN,
-					{ "oauth_verifier":pinCode }, URLRequestMethod.POST);
+					{ "oauth_verifier":pinCode }, URLRequestMethod.POST, null);
 			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
 			return loader;
 		}
@@ -123,17 +125,16 @@ package authorizer
 			return newObj;
 		}
 		
-		private function getApiUrl(url:String):String
+		private function getApiUrl(url:String, format:String = "json"):String
 		{
-			return OAuthTwitter.API_URL + url;
+			return OAuthTwitter.API_URL + url + ((format)?"." + format:"");
 		}
 		
-		public function beginApiRequest(url:String, options:Object, method:String):URLLoader
+		public function beginApiRequest(url:String, options:Object, method:String, format:String = "json"):URLLoader
 		{
-			var requestUrl:String = this.getApiUrl(url);
-			var requestOptions:Object = this.toRequestOptions(options);
+			var requestUrl:String = this.getApiUrl(url, format);
             var oauthRequest:OAuthRequest = new OAuthRequest(method,
-                    requestUrl, requestOptions, this._consumer, this._token);
+                    requestUrl, options, this._consumer, this._token);
 			var header:URLRequestHeader = this.createRequestHeader(oauthRequest);
 			
 			var request:URLRequest = new URLRequest(requestUrl);
@@ -143,10 +144,11 @@ package authorizer
 			return new URLLoader(request);
 		}
 		
-		public function homeTimeline(options:Object):URLLoader
+		public function homeTimeline(options:Object = null):URLLoader
 		{
-			//var loader:URLLoader = this.beginApiRequest(
-			return null;
+			var requestOptions:Object = this.toRequestOptions(options);
+			var loader:URLLoader = this.beginApiRequest(OAuthTwitter.HOME_TIMELINE, requestOptions, URLRequestMethod.GET)
+			return loader;
 		}
 	}
 

@@ -127,7 +127,6 @@ package authorizer
 			var variables:URLVariables = loader.data as URLVariables;
 			
 			this._oauth.setTokenWithVariables(variables);
-			trace(this._oauth.screenName);
 			
 			this.dispatchEvent(new AuthorizeEvent(AuthorizeEvent.AUTHORIZATION_COMPLETED));
 		}
