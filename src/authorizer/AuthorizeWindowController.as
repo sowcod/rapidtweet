@@ -39,7 +39,7 @@ package authorizer
 		
 		public function AuthorizeWindowController() 
 		{
-			this.addEventListener(FlexEvent.CREATION_COMPLETE, this.onComplete);
+			this.addEventListener(FlexEvent.CREATION_COMPLETE, this.onComplete, false, 0, true);
 		}
 		
 		private function onComplete(ev:FlexEvent):void
@@ -52,7 +52,7 @@ package authorizer
 			this._htmlControl.addEventListener(Event.LOCATION_CHANGE, this.onLocationChange);
 			if (this._location) this._htmlControl.location = this._location;
 			
-			this.addEventListener(Event.CLOSE, this.onClose);
+			this.addEventListener(Event.CLOSE, this.onClose, false, 0, true);
 		}
 		
 		private function onClose(ev:Event):void

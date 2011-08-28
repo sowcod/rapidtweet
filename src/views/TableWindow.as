@@ -1,5 +1,11 @@
 package views 
 {
+	import com.adobe.serialization.json.JSON;
+	import flash.events.Event;
+	import flash.events.KeyboardEvent;
+	import flash.net.URLLoader;
+	import net.sowcod.rapidtweet.authorizer.IApiInterface;
+	import settings.ApplicationSetting;
 	import views.tablecontrol.TableCell;
 	import flash.events.NativeWindowBoundsEvent;
 	import flash.events.TimerEvent;
@@ -14,6 +20,12 @@ package views
 	{
 		private var _tableControl:TableControl;
 		private var _leftMargin:Number = 10;
+		private var _applicationSetting:ApplicationSetting;
+		[Bindable]
+		public var apiInterface:IApiInterface;
+		
+		public function get applicationSetting():ApplicationSetting { return _applicationSetting; }
+		public function set applicationSetting(value:ApplicationSetting):void { _applicationSetting = value; }
 		
 		public function TableWindow() 
 		{
@@ -21,13 +33,15 @@ package views
 			this._tableControl.x = this.contentsBounds.x + this._leftMargin;
 			this._tableControl.y = this.contentsBounds.y;
 			
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, this.onKeyDown);
+			
+			this.updateBounds();
+			/*
 			var cells:Array = [];
 			for (var i:int = 0; i < 100; ++i)
 			{
 				cells.push(this.addSampleCell(i));
 			}
-			
-			this.updateBounds();
 			
 			var timer:Timer = new Timer(300);
 			var self:TableWindow = this;
@@ -44,6 +58,52 @@ package views
 				self._tableControl.removeCell(cell);
 			});
 			timer2.start();
+			*/
+			/*
+			var timelineTimer:Timer = new Timer(300000);
+			var self:TableWindow = this;
+			timelineTimer.addEventListener(TimerEvent.TIMER, function(ev:TimerEvent):void
+			{
+				self.updateTimeline();
+			});
+			timelineTimer.start();
+			*/
+			this.updateTimeline();
+		}
+		private function onKeyDown(ev:KeyboardEvent):void
+		{
+			if (ev.keyCode == 116)
+			{
+				this.updateTimeline();
+			}
+		}
+		
+		private function updateTimeline():void
+		{
+			trace("update", this.apiInterface);
+			if (!this.apiInterface) return;
+			var api:IApiInterface = this.apiInterface;
+			var self:TableWindow = this;
+			api.homeTimeline().addEventListener(Event.COMPLETE, function (ev:Event):void 
+			{
+				var loader:URLLoader = ev.currentTarget as URLLoader;
+				loader.removeEventListener(Event.COMPLETE, arguments.callee);
+				
+				var alldata:Object = JSON.decode(loader.data);
+				for each (var tweet:Object in alldata)
+				{
+					self.addTweetCell(tweet);
+				}
+			});
+		}
+		
+		private function addTweetCell(tweet:Object):TableCell
+		{
+			var cell:TableCell = new TableCell();
+			cell.cellID = tweet["id"];
+			cell.text = tweet["text"];
+			this._tableControl.addCell(cell);
+			return cell;
 		}
 		
 		private function addSampleCell(num:int):TableCell
@@ -67,7 +127,7 @@ package views
 					cell.text = "うえおか";
 					break;
 			}
-			cell.date = new Date();
+			cell.cellID = (new Date()).time;
 			cell.text += num;
 			this._tableControl.addCell(cell);
 			return cell;
@@ -91,6 +151,7 @@ package views
 			newBounds.left += this._leftMargin;
 			this._tableControl.onResize(newBounds);
 		}
+		
 	}
 
 }

@@ -20,7 +20,7 @@ package views.tablecontrol
 		private var _border:TableCellBorder;
 		private var _selected:Boolean;
 		private var _cellVisible:Boolean;
-		private var _date:Date;
+		private var _cellID:Number;
 		
 		public function get cellHeight():Number
 		{
@@ -72,16 +72,16 @@ package views.tablecontrol
 		}
 		public function get sortValue():Number
 		{
-			return this._date.time;
+			return this._cellID;
 		}
 		
-		public function set date(date:Date):void 
+		public function set cellID(id:Number):void 
 		{
-			this._date = date;
+			this._cellID = id;
 		}
-		public function get date():Date
+		public function get cellID():Number
 		{
-			return this._date;
+			return this._cellID
 		}
 		
 		public function TableCell() 

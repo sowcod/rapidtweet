@@ -9,11 +9,12 @@ package settings
 	import spark.components.NavigatorContent;
 	import spark.components.TextInput;
 	import settings.AuthorizationSetting;
+	import spark.components.Window;
 	/**
 	 * ...
 	 * @author sowcod
 	 */
-	public class AuthorizationSettingController extends NavigatorContent
+	public class AuthorizationSettingController extends Window
 	{
 		private var _instance:AuthorizationSetting
 		private var _screenName:TextInput;
@@ -45,7 +46,8 @@ package settings
 		
 		public function beginAuthorization(ev:Event):void
 		{
-			this.parentApplication.enabled = false;
+			this._screenName.text = "";
+			this.enabled = false;
 			var auth:IAuthorizer = new OAuthAuthorizer();
 			auth.addEventListener(AuthorizeEvent.AUTHORIZATION_COMPLETED, this.finishAuthorization);
 			
@@ -54,11 +56,12 @@ package settings
 		
 		public function finishAuthorization(ev:AuthorizeEvent):void
 		{
-			this.parentApplication.enabled = true;
+			this.enabled = true;
 			this.currentState = "authorized";
 			
 			var auth:IAuthorizer = ev.currentTarget as IAuthorizer;
 			var api:IApiInterface = auth.apiInterface;
+			this._apiInterface = auth.apiInterface;
 			this._screenName.text = api.screenName;
 		}
 	}

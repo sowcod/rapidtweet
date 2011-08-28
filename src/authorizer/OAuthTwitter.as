@@ -117,6 +117,7 @@ package authorizer
 		
 		private function toRequestOptions(options:Object):Object
 		{
+			if (options == null) options = { };
 			var ba:ByteArray = new ByteArray();
 			ba.writeObject(options);
 			ba.position = 0;

@@ -12,7 +12,7 @@
 	</fx:Declarations>
 	<s:VGroup id="settingWindow" width="100%" height="100%">
 		<mx:TabNavigator width="100%" height="100%">
-			<settingsComp:AuthorizationSetting label="Account"/>
+			<!--<settingsComp:AuthorizationSetting id="auth_setting" label="Account"/>-->
 			<settingsComp:RefreshSetting label="Refresh" />
 		</mx:TabNavigator>
 		<s:HGroup width="100%" horizontalAlign="right">
