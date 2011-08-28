@@ -65,6 +65,7 @@ package authorizer
 			
 			var progressWindow:SimpleProgressWindow = new SimpleProgressWindow();
 			loader.addEventListener(Event.COMPLETE, function(ev:Event):void {
+				loader.removeEventListener(Event.COMPLETE, arguments.callee);
 				progressWindow.close();
 			});
 			progressWindow.open();
@@ -78,6 +79,7 @@ package authorizer
 		private function finishGetAuthorizeUrl(ev:Event):void
 		{
 			var loader:URLLoader = ev.target as URLLoader;
+			loader.removeEventListener(Event.COMPLETE, arguments.callee);
 			var variables:URLVariables = loader.data as URLVariables;
 			
 			this._oauth.setTokenWithVariables(variables);
@@ -100,18 +102,11 @@ package authorizer
 			var authWindow:AuthorizeWindow = ev.currentTarget as AuthorizeWindow;
 			
 			var loader:URLLoader = this._oauth.beginAccessToken(authWindow.pinCode);
-			loader.addEventListener(HTTPStatusEvent.HTTP_RESPONSE_STATUS, function(ev:HTTPStatusEvent):void
-			{
-				trace('statuscode:' , ev.status);
-			});
-			loader.addEventListener(IOErrorEvent.IO_ERROR, function(ev:IOErrorEvent):void
-			{
-				trace(ev.errorID, ev.text);
-			});
 			loader.addEventListener(Event.COMPLETE, this.finishAuthorize);
 			
 			var progressWindow:SimpleProgressWindow = new SimpleProgressWindow();
 			loader.addEventListener(Event.COMPLETE, function(ev:Event):void {
+				loader.removeEventListener(Event.COMPLETE, arguments.callee);
 				progressWindow.close();
 			});
 			progressWindow.open();
@@ -124,6 +119,7 @@ package authorizer
 		private function finishAuthorize(ev:Event):void 
 		{
 			var loader:URLLoader = ev.target as URLLoader;
+			loader.removeEventListener(Event.COMPLETE, arguments.callee);
 			var variables:URLVariables = loader.data as URLVariables;
 			
 			this._oauth.setTokenWithVariables(variables);
